@@ -14,14 +14,11 @@ void App::init(sf::Vector2u windowSize, std::string windowTitle)
 
 	mRenderWindow.setVerticalSyncEnabled(true);
 
-	// sets application running
 	m_running = true;
 
 
 	// initialise all perceptron weights randomly
 	mPerceptron.initRandomWeights();
-
-
 
 }
 
@@ -48,6 +45,8 @@ void App::update()
 	// clear canvas
 	mRenderTexture.clear(sf::Color::White);
 
+	numCycles++;
+
 	int inputA = randValInt(0, 1);
 	int inputB = randValInt(0, 1);
 
@@ -56,9 +55,21 @@ void App::update()
 
 	std::string result = (desired == perceptronGuess) ? "Correct" : "Wrong";
 
+	if (result == "Wrong") { numWrongCycles++; }
 	
+	float percentageError = (numWrongCycles / (float)numCycles) * 100;
+
 	
-	std::cout << "InputA: " << inputA << " InputB: " << inputB << " Desired: " << desired << " Guess: " << perceptronGuess << " Result: " << result << std::endl;
+
+	std::cout 
+		<< std::endl << std::endl
+		<< "Cycle Num:\t" << numCycles << std::endl
+		<< "Input A:\t" << inputA << std::endl
+		<< "Input B:\t" << inputB << std::endl
+		<< "Desired Output:\t" << desired << std::endl
+		<< "Guess Ouput:\t" << perceptronGuess << std::endl
+		<< "Result:\t" << result << std::endl
+		<< "% Cycles Wrong:\t" << percentageError << std::endl;
 
 
 	mPerceptron.train(inputA, inputB, desired);

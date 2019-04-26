@@ -10,7 +10,8 @@ private:
 	sf::RenderWindow mRenderWindow;
 	sf::RenderTexture mRenderTexture;		// used for off screen drawing
 
-
+	uint32_t numCycles;
+	uint16_t numWrongCycles;
 	Perceptron mPerceptron;
 	
 
